@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">CETEJ36ProjetoFinal</string>
+    <string name="app_name">Movies review</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
 </resources>
