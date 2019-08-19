@@ -8,4 +8,17 @@
     <item
         android:id="@+id/menuItemExcluir"
         android:title="@string/delete" />
+    <item
+        android:id="@+id/menuItemCheck"
+        android:checkable="true"
+        android:onClick="exemploAcaoMenuItem"
+        android:title="@string/check" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menuItemTestColor"
+            android:title="@string/testColor1" />
+        <item
+            android:id="@+id/menuItemTestColor2"
+            android:title="@string/testColor2" />
+    </group>
 </menu>
