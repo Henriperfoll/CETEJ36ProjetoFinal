@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.menuItemExcluir:
+            case R.id.menuItemAdd:
                 Toast.makeText(this,"TODO: esse item",Toast.LENGTH_LONG).show();
                 return true;
             case R.id.menuItemTestColor:
