@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/menuItemAddReview"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/add" />
-    <item
-        android:id="@+id/menuItemCancelReview"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
-        android:title="@string/cancel" />
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/add"
+        app:showAsAction="ifRoom" />
 </menu>

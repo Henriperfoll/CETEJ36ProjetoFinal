@@ -24,21 +24,32 @@ public class AddMovieReviewActivity extends AppCompatActivity {
 
     private EditText movieNameEditText;
     private EditText movieReviewEditText;
+    private int mode;
+    private MovieReview original;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_movie_review);
-
-
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         this.movieNameEditText = findViewById(R.id.editTextMovieName);
         this.movieReviewEditText = findViewById(R.id.editTextReview);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle != null){
+            mode = bundle.getInt(MODE,NEW);
+            if(mode == NEW){
+                setTitle("New Movie Review");
+            }else{
+                this.original = new MovieReview(bundle.getString(NAME),bundle.getString(REVIEW));
+                this.movieNameEditText.setText(this.original.getMovieName());
+                this.movieReviewEditText.setText(this.original.getReview());
+            }
+        }
     }
 
     @Override
@@ -59,7 +70,7 @@ public class AddMovieReviewActivity extends AppCompatActivity {
             case R.id.menuItemAddReview:
                 this.add();
                 return true;
-            case R.id.menuItemCancelReview:
+            case android.R.id.home:
                 this.cancel();
                 return true;
             default:
@@ -77,6 +88,12 @@ public class AddMovieReviewActivity extends AppCompatActivity {
 
     public static void editReview(AppCompatActivity activity, MovieReview review){
         Intent intent = new Intent(activity, AddMovieReviewActivity.class);
+
+        intent.putExtra(MODE, EDIT);
+        intent.putExtra(REVIEW,review.getReview());
+        intent.putExtra(NAME,review.getMovieName());
+
+        activity.startActivityForResult(intent, EDIT);
     }
 
     public void cancel(){

@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ConstraintLayout layout;
     private ListView listViewMovies;
-    private ArrayAdapter<String> listAdapter;
-    private ArrayList<String> listMovies;
+    private ArrayAdapter<MovieReview> listAdapter;
+    private ArrayList<MovieReview> listMovies;
     private int positionSelected = -1;
     private ActionMode actionMode;
     private View viewSelected;
@@ -66,10 +66,8 @@ public class MainActivity extends AppCompatActivity {
             if(viewSelected != null ){
                 viewSelected.setBackgroundColor(Color.TRANSPARENT);
             }
-
             actionMode = null;
             viewSelected = null;
-
             listViewMovies.setEnabled(true);
         }
     };
@@ -90,9 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 edit();
             }
         });
-
         this.listViewMovies.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
         this.listViewMovies.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
 
@@ -101,27 +97,19 @@ public class MainActivity extends AppCompatActivity {
                                                    View view,
                                                    int position,
                                                    long id) {
-
                         if (actionMode != null){
                             return false;
                         }
-
                         positionSelected = position;
-
                         view.setBackgroundColor(Color.LTGRAY);
-
                         viewSelected = view;
-
                         listViewMovies.setEnabled(false);
-
                         actionMode = startSupportActionMode(mActionModeCallBack);
-
                         return true;
                     }
                 });
 
         this.populateList();
-
         registerForContextMenu(this.listViewMovies);
     }
 
@@ -136,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.menuItemAdd:
-                this.add();
+                AddMovieReviewActivity.newReview(this);
                 return true;
             case R.id.menuItemTestColor:
                 this.layout.setBackgroundColor(Color.DKGRAY);
@@ -158,21 +146,23 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK){
 
             Bundle bundle = data.getExtras();
-            MovieReview movie = new MovieReview();
-            movie.setMovieName(bundle.getString(AddMovieReviewActivity.NAME));
-            movie.setReview(bundle.getString(AddMovieReviewActivity.REVIEW));
 
-            this.listMovies.add(movie.getMovieName());
-
+            if (requestCode == AddMovieReviewActivity.EDIT){
+                MovieReview movie = this.listMovies.get(positionSelected);
+                movie.setMovieName(bundle.getString(AddMovieReviewActivity.NAME));
+                movie.setReview(bundle.getString(AddMovieReviewActivity.REVIEW));
+            }else{
+                MovieReview movie = new MovieReview();
+                movie.setMovieName(bundle.getString(AddMovieReviewActivity.NAME));
+                movie.setReview(bundle.getString(AddMovieReviewActivity.REVIEW));
+                this.listMovies.add(movie);
+            }
 
             this.listAdapter.notifyDataSetChanged();
-            Toast.makeText(this,
-                    "teste",
-                    Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void exemploAcaoMenuItem(MenuItem item){
+    public void exampleMenuAction(MenuItem item){
         item.setChecked(!item.isChecked());
     }
 
@@ -184,17 +174,13 @@ public class MainActivity extends AppCompatActivity {
         this.listViewMovies.setAdapter(this.listAdapter);
     }
 
-    public void add(){
-        AddMovieReviewActivity.newReview(this);
-    }
-
     public void delete(int position){
         this.listMovies.remove(position);
         this.listAdapter.notifyDataSetChanged();
     }
 
     public void edit(){
-
+        AddMovieReviewActivity.editReview(this,listMovies.get(this.positionSelected));
     }
 
 

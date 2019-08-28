@@ -45,4 +45,12 @@ public class MovieReview {
     public void setReviewDate(Date reviewDate) {
         this.reviewDate = reviewDate;
     }
+
+    public MovieReview(String movieName, String review) {
+        this.movieName = movieName;
+        this.review = review;
+    }
+
+    public MovieReview() {
+    }
 }

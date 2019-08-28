@@ -10,7 +10,7 @@
     <item
         android:id="@+id/menuItemCheck"
         android:checkable="true"
-        android:onClick="exemploAcaoMenuItem"
+        android:onClick="exampleMenuAction"
         android:title="@string/check" />
     <group android:checkableBehavior="single">
         <item
