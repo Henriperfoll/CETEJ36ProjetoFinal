@@ -134,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
                 this.layout.setBackgroundColor(Color.CYAN);
                 item.setChecked(true);
                 return true;
-
+            case R.id.menuItemAbout:
+                Toast.makeText(this,"TODO - About",Toast.LENGTH_LONG);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

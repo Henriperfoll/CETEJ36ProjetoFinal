@@ -12,4 +12,5 @@
     <string name="score">Score</string>
     <string name="cancel">Cancel</string>
     <string name="messageError">The name cannot be empty</string>
+    <string name="about">About</string>
 </resources>

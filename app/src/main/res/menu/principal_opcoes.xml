@@ -20,4 +20,7 @@
             android:id="@+id/menuItemTestColor2"
             android:title="@string/testColor2" />
     </group>
+    <item
+        android:id="@+id/menuItemAbout"
+        android:title="@string/about" />
 </menu>
