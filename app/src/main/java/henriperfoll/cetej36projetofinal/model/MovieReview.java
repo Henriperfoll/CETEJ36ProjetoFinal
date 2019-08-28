@@ -13,6 +13,11 @@ public class MovieReview {
         return movieName;
     }
 
+    @Override
+    public String toString() {
+        return getMovieName();
+    }
+
     public void setMovieName(String movieName) {
         this.movieName = movieName;
     }

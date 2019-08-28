@@ -10,4 +10,6 @@
     <string name="movie_name">Movie Name</string>
     <string name="review">Review</string>
     <string name="score">Score</string>
+    <string name="cancel">Cancel</string>
+    <string name="messageError">The name cannot be empty</string>
 </resources>
