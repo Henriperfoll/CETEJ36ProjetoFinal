@@ -13,4 +13,13 @@
     <string name="cancel">Cancel</string>
     <string name="messageError">The name cannot be empty</string>
     <string name="about">About</string>
+    <string name="preferences">Preferences</string>
+    <string name="background">Background</string>
+    <string name="day_mode">Day Mode</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="portuguese">Portuguese</string>
+    <string name="edit_movie_review">Edit Movie Review</string>
+    <string name="new_movie_review">New Movie Review</string>
 </resources>

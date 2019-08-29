@@ -1,7 +1,9 @@
 package henriperfoll.cetej36projetofinal;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ public class AddMovieReviewActivity extends AppCompatActivity {
     public static final int    NEW  = 1;
     public static final int    EDIT = 2;
 
+    private ConstraintLayout layout;
     private EditText movieNameEditText;
     private EditText movieReviewEditText;
     private int mode;
@@ -31,6 +34,7 @@ public class AddMovieReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_movie_review);
+        this.readPreferences();
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -43,8 +47,9 @@ public class AddMovieReviewActivity extends AppCompatActivity {
         if(bundle != null){
             mode = bundle.getInt(MODE,NEW);
             if(mode == NEW){
-                setTitle("New Movie Review");
+                setTitle(R.string.new_movie_review);
             }else{
+                setTitle(R.string.edit_movie_review);
                 this.original = new MovieReview(bundle.getString(NAME),bundle.getString(REVIEW));
                 this.movieNameEditText.setText(this.original.getMovieName());
                 this.movieReviewEditText.setText(this.original.getReview());
@@ -120,5 +125,11 @@ public class AddMovieReviewActivity extends AppCompatActivity {
 
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    public void readPreferences(){
+        layout = findViewById(R.id.addMoviesReviewLayout);
+        SharedPreferences shared = getSharedPreferences(PreferencesActivity.FILE, Context.MODE_PRIVATE);
+        layout.setBackgroundColor(shared.getInt(PreferencesActivity.COLOR,PreferencesActivity.DAY));
     }
 }

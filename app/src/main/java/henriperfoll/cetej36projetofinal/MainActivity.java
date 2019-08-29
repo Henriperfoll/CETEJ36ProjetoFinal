@@ -1,10 +1,11 @@
 package henriperfoll.cetej36projetofinal;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -14,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -77,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        this.layout = findViewById(R.id.principal_layout);
+        readPreferences();
         this.listViewMovies = findViewById(R.id.listItemStrings);
 
         this.listViewMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -137,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuItemAbout:
                 Toast.makeText(this,"TODO - About",Toast.LENGTH_LONG);
                 return true;
+            case R.id.menuItemPreferences:
+                PreferencesActivity.setPreferences(this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -146,7 +147,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == Activity.RESULT_OK){
-
+            if (requestCode == PreferencesActivity.PREFERENCE){
+                this.readPreferences();
+                return;
+            }
             Bundle bundle = data.getExtras();
 
             if (requestCode == AddMovieReviewActivity.EDIT){
@@ -183,6 +187,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void edit(){
         AddMovieReviewActivity.editReview(this,listMovies.get(this.positionSelected));
+    }
+
+    public void readPreferences(){
+        layout = findViewById(R.id.principal_layout);
+        SharedPreferences shared = getSharedPreferences(PreferencesActivity.FILE, Context.MODE_PRIVATE);
+        layout.setBackgroundColor(shared.getInt(PreferencesActivity.COLOR,PreferencesActivity.DAY));
     }
 
 

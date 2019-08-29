@@ -21,6 +21,9 @@
             android:title="@string/testColor2" />
     </group>
     <item
+        android:id="@+id/menuItemPreferences"
+        android:title="@string/preferences" />
+    <item
         android:id="@+id/menuItemAbout"
         android:title="@string/about" />
 </menu>
