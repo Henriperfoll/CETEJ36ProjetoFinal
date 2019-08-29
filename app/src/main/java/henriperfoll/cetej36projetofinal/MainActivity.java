@@ -1,7 +1,9 @@
 package henriperfoll.cetej36projetofinal;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     mode.finish();
                     return true;
                 case R.id.menuContextItemDelete:
-                    delete(positionSelected);
+                    deleteAlert();
                     mode.finish();
                     return true;
                 default:
@@ -172,9 +173,27 @@ public class MainActivity extends AppCompatActivity {
         this.listViewMovies.setAdapter(this.listAdapter);
     }
 
-    public void delete(int position){
-        this.listMovies.remove(position);
-        this.listAdapter.notifyDataSetChanged();
+    public void deleteAlert(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertBuilder.setMessage(R.string.alert_message).setCancelable(true).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                delete();
+            }
+        }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = alertBuilder.create();
+        alert.setTitle(getString(R.string.alert_title));
+        alert.show();
+    }
+
+    public void delete(){
+        listMovies.remove(positionSelected);
+        listAdapter.notifyDataSetChanged();
     }
 
     public void edit(){
