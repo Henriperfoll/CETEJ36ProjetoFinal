@@ -124,16 +124,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuItemAdd:
                 AddMovieReviewActivity.newReview(this);
                 return true;
-            case R.id.menuItemTestColor:
-                this.layout.setBackgroundColor(Color.DKGRAY);
-                item.setChecked(true);
-                return true;
-            case R.id.menuItemTestColor2:
-                this.layout.setBackgroundColor(Color.CYAN);
-                item.setChecked(true);
-                return true;
             case R.id.menuItemAbout:
-                Toast.makeText(this,"TODO - About",Toast.LENGTH_LONG);
+                AboutActivity.showAbout(this);
                 return true;
             case R.id.menuItemPreferences:
                 PreferencesActivity.setPreferences(this);

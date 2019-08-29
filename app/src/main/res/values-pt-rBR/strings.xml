@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movies review</string>
+    <string name="about_text">Este aplicativo foi desenvolvido por Henrique Perfoll Neto, aluno do curso de Especialização em Java. Este aplicativo é o projeto final para a classe de desenvolvimento android.</string>
+</resources>

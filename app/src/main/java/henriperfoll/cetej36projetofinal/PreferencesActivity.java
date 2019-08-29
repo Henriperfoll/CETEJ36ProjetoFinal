@@ -17,16 +17,11 @@ public class PreferencesActivity extends AppCompatActivity {
 
     public static final int DAY = Color.WHITE;
     public static final int NIGHT = Color.LTGRAY;
-    public static final int ENG = 1;
-    public static final int POR = 2;
     public static final int PREFERENCE = 3;
     public static final String COLOR = "COLOR";
-    public static final String LANGUAGE = "LANGUAGE";
     public static final String FILE = "henriperfoll.cetej36projetofinal.PREFERENCES";
 
     private int colorMode = DAY;
-    private int language = ENG;
-    private RadioGroup radioGroupLanguages;
     private RadioGroup radioGroupModes;
     private ConstraintLayout layout;
 
@@ -35,7 +30,6 @@ public class PreferencesActivity extends AppCompatActivity {
         setTitle(R.string.preferences);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
-        this.radioGroupLanguages = findViewById(R.id.radioGroupLanguage);
         this.radioGroupModes = findViewById(R.id.radioGroupColorMode);
         this.layout = findViewById(R.id.preferencesLayout);
         this.readPreferences(this.layout);
@@ -45,14 +39,6 @@ public class PreferencesActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 changeColor();
                 changeColorPreferences();
-            }
-        });
-
-        this.radioGroupLanguages.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                changeLanguage();
-                changeLanguagePreferences();
             }
         });
 
@@ -85,10 +71,7 @@ public class PreferencesActivity extends AppCompatActivity {
 
     public void readPreferences(ConstraintLayout layout){
         SharedPreferences shared = getSharedPreferences(FILE, Context.MODE_PRIVATE);
-
         this.colorMode = shared.getInt(COLOR,DAY);
-        this.language = shared.getInt(LANGUAGE,ENG);
-
         this.changePreferences(layout);
     }
 
@@ -100,15 +83,10 @@ public class PreferencesActivity extends AppCompatActivity {
         this.layout.setBackgroundColor(this.colorMode);
     }
 
-    public void changeLanguagePreferences(){
-
-    }
-
     public void savePreferences(View view){
 
         SharedPreferences shared = getSharedPreferences(FILE,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shared.edit();
-        editor.putInt(LANGUAGE, language);
         editor.putInt(COLOR, colorMode);
 
         editor.commit();
@@ -125,13 +103,6 @@ public class PreferencesActivity extends AppCompatActivity {
             default:
                 this.radioGroupModes.check(R.id.radioButtonDayMode);
         }
-        switch (this.language){
-            case ENG:
-                this.radioGroupLanguages.check(R.id.radioButtonEnglish);
-                break;
-            default:
-                this.radioGroupLanguages.check(R.id.radioButtonPortuguese);
-        }
     }
 
     public void changeColor(){
@@ -142,17 +113,6 @@ public class PreferencesActivity extends AppCompatActivity {
                 break;
             case R.id.radioButtonNightMode:
                 this.colorMode = NIGHT;
-                break;
-        }
-    }
-
-    public void changeLanguage(){
-        switch (this.radioGroupLanguages.getCheckedRadioButtonId()){
-            case R.id.radioButtonEnglish:
-                this.language = ENG;
-                break;
-            case R.id.radioButtonPortuguese:
-                this.language = POR;
                 break;
         }
     }

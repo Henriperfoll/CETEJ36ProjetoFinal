@@ -12,14 +12,6 @@
         android:checkable="true"
         android:onClick="exampleMenuAction"
         android:title="@string/check" />
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/menuItemTestColor"
-            android:title="@string/testColor1" />
-        <item
-            android:id="@+id/menuItemTestColor2"
-            android:title="@string/testColor2" />
-    </group>
     <item
         android:id="@+id/menuItemPreferences"
         android:title="@string/preferences" />

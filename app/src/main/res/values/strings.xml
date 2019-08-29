@@ -22,4 +22,6 @@
     <string name="portuguese">Portuguese</string>
     <string name="edit_movie_review">Edit Movie Review</string>
     <string name="new_movie_review">New Movie Review</string>
+    <string name="about_text">This app was developed by Henrique Perfoll Neto, student of the course in Java Specialization. This app is the final project for the android development class.</string>
+    <string name="about_movies_review">About Movies Review</string>
 </resources>
