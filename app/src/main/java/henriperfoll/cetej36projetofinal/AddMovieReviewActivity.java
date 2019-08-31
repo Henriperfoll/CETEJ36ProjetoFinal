@@ -14,13 +14,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import henriperfoll.cetej36projetofinal.model.MovieReview;
+import henriperfoll.cetej36projetofinal.persistence.AppDatabase;
 
 public class AddMovieReviewActivity extends AppCompatActivity {
 
     public static final String MODE         = "MODE";
-    public static final String NAME         = "NAME";
-    public static final String REVIEW       = "REVIEW";
-    public static final String SCORE        = "SCORE";
+    public static final String ID           = "ID";
     public static final int    NEW  = 1;
     public static final int    EDIT = 2;
 
@@ -50,7 +49,8 @@ public class AddMovieReviewActivity extends AppCompatActivity {
                 setTitle(R.string.new_movie_review);
             }else{
                 setTitle(R.string.edit_movie_review);
-                this.original = new MovieReview(bundle.getString(NAME),bundle.getString(REVIEW));
+                AppDatabase database = AppDatabase.getInstance(this);
+                this.original = database.movieReviewDAO.movieReviewById(bundle.getLong(ID));
                 this.movieNameEditText.setText(this.original.getMovieName());
                 this.movieReviewEditText.setText(this.original.getReview());
             }
@@ -73,7 +73,7 @@ public class AddMovieReviewActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.menuItemAddReview:
-                this.add();
+                this.save();
                 return true;
             case android.R.id.home:
                 this.cancel();
@@ -95,8 +95,7 @@ public class AddMovieReviewActivity extends AppCompatActivity {
         Intent intent = new Intent(activity, AddMovieReviewActivity.class);
 
         intent.putExtra(MODE, EDIT);
-        intent.putExtra(REVIEW,review.getReview());
-        intent.putExtra(NAME,review.getMovieName());
+        intent.putExtra(ID,review.getId());
 
         activity.startActivityForResult(intent, EDIT);
     }
@@ -106,9 +105,10 @@ public class AddMovieReviewActivity extends AppCompatActivity {
         finish();
     }
 
-    public void add(){
+    public void save(){
 
         String name = this.movieNameEditText.getText().toString();
+        String review = this.movieReviewEditText.getText().toString();
 
         if(name == null || name.trim().isEmpty()){
             Toast.makeText(this,
@@ -119,11 +119,19 @@ public class AddMovieReviewActivity extends AppCompatActivity {
             return;
         }
 
-        Intent intent = new Intent();
-        intent.putExtra(NAME, name);
-        intent.putExtra(REVIEW, this.movieReviewEditText.getText().toString());
+        AppDatabase database = AppDatabase.getInstance(this);
 
-        setResult(Activity.RESULT_OK, intent);
+
+        if(this.mode == NEW){
+            MovieReview movieReview = new MovieReview(name, review);
+            database.movieReviewDAO.insert(movieReview);
+
+        }else{
+            this.original.setReview(review);
+            this.original.setMovieName(name);
+            database.movieReviewDAO.update(this.original);
+        }
+        setResult(Activity.RESULT_OK);
         finish();
     }
 

@@ -18,17 +18,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import henriperfoll.cetej36projetofinal.model.MovieReview;
+import henriperfoll.cetej36projetofinal.persistence.AppDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     private ConstraintLayout layout;
     private ListView listViewMovies;
     private ArrayAdapter<MovieReview> listAdapter;
-    private ArrayList<MovieReview> listMovies;
     private int positionSelected = -1;
     private ActionMode actionMode;
     private View viewSelected;
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         readPreferences();
+
+        AppDatabase database = AppDatabase.getInstance(this);
+        database.movieReviewDAO.loadAll();
+
         this.listViewMovies = findViewById(R.id.listItemStrings);
 
         this.listViewMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -144,19 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 this.readPreferences();
                 return;
             }
-            Bundle bundle = data.getExtras();
-
-            if (requestCode == AddMovieReviewActivity.EDIT){
-                MovieReview movie = this.listMovies.get(positionSelected);
-                movie.setMovieName(bundle.getString(AddMovieReviewActivity.NAME));
-                movie.setReview(bundle.getString(AddMovieReviewActivity.REVIEW));
-            }else{
-                MovieReview movie = new MovieReview();
-                movie.setMovieName(bundle.getString(AddMovieReviewActivity.NAME));
-                movie.setReview(bundle.getString(AddMovieReviewActivity.REVIEW));
-                this.listMovies.add(movie);
-            }
-
+            Toast.makeText(this,"teste",Toast.LENGTH_SHORT).show();
             this.listAdapter.notifyDataSetChanged();
         }
     }
@@ -166,9 +159,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateList(){
-        this.listMovies = new ArrayList<>();
 
-        this.listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,this.listMovies);
+        AppDatabase database = AppDatabase.getInstance(this);
+
+        this.listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,database.movieReviewDAO.list);
 
         this.listViewMovies.setAdapter(this.listAdapter);
     }
@@ -192,12 +186,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void delete(){
-        listMovies.remove(positionSelected);
+        AppDatabase database = AppDatabase.getInstance(this);
+        database.movieReviewDAO.delete(database.movieReviewDAO.list.get(positionSelected));
         listAdapter.notifyDataSetChanged();
     }
 
     public void edit(){
-        AddMovieReviewActivity.editReview(this,listMovies.get(this.positionSelected));
+        AppDatabase database = AppDatabase.getInstance(this);
+        AddMovieReviewActivity.editReview(this,database.movieReviewDAO.list.get(positionSelected));
     }
 
     public void readPreferences(){
