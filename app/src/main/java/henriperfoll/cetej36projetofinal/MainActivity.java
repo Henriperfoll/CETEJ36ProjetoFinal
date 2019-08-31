@@ -149,13 +149,8 @@ public class MainActivity extends AppCompatActivity {
                 this.readPreferences();
                 return;
             }
-            Toast.makeText(this,"teste",Toast.LENGTH_SHORT).show();
             this.listAdapter.notifyDataSetChanged();
         }
-    }
-
-    public void exampleMenuAction(MenuItem item){
-        item.setChecked(!item.isChecked());
     }
 
     private void populateList(){

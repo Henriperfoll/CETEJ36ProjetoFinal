@@ -10,8 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import henriperfoll.cetej36projetofinal.model.MovieReview;
 import henriperfoll.cetej36projetofinal.persistence.AppDatabase;
@@ -26,6 +30,7 @@ public class AddMovieReviewActivity extends AppCompatActivity {
     private ConstraintLayout layout;
     private EditText movieNameEditText;
     private EditText movieReviewEditText;
+    private Spinner spinnerScore;
     private int mode;
     private MovieReview original;
 
@@ -40,6 +45,8 @@ public class AddMovieReviewActivity extends AppCompatActivity {
         }
         this.movieNameEditText = findViewById(R.id.editTextMovieName);
         this.movieReviewEditText = findViewById(R.id.editTextReview);
+        this.spinnerScore = findViewById(R.id.spinnerScore);
+        int selectedScore = 1;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -47,14 +54,17 @@ public class AddMovieReviewActivity extends AppCompatActivity {
             mode = bundle.getInt(MODE,NEW);
             if(mode == NEW){
                 setTitle(R.string.new_movie_review);
+                this.original = new MovieReview();
             }else{
                 setTitle(R.string.edit_movie_review);
                 AppDatabase database = AppDatabase.getInstance(this);
                 this.original = database.movieReviewDAO.movieReviewById(bundle.getLong(ID));
                 this.movieNameEditText.setText(this.original.getMovieName());
                 this.movieReviewEditText.setText(this.original.getReview());
+                selectedScore = this.original.getScore();
             }
         }
+        this.populateSpinner(selectedScore);
     }
 
     @Override
@@ -109,6 +119,7 @@ public class AddMovieReviewActivity extends AppCompatActivity {
 
         String name = this.movieNameEditText.getText().toString();
         String review = this.movieReviewEditText.getText().toString();
+        int score = this.spinnerScore.getSelectedItemPosition()+1;
 
         if(name == null || name.trim().isEmpty()){
             Toast.makeText(this,
@@ -121,18 +132,31 @@ public class AddMovieReviewActivity extends AppCompatActivity {
 
         AppDatabase database = AppDatabase.getInstance(this);
 
+        this.original.setReview(review);
+        this.original.setMovieName(name);
+        this.original.setScore(score);
 
         if(this.mode == NEW){
-            MovieReview movieReview = new MovieReview(name, review);
-            database.movieReviewDAO.insert(movieReview);
+
+            database.movieReviewDAO.insert(original);
 
         }else{
-            this.original.setReview(review);
-            this.original.setMovieName(name);
+
             database.movieReviewDAO.update(this.original);
         }
         setResult(Activity.RESULT_OK);
         finish();
+    }
+
+    private void populateSpinner(int selected){
+        ArrayList<String> list = new ArrayList<>();
+        for(int i=1;i < 6; i++){
+            list.add(""+i);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,list);
+        this.spinnerScore.setAdapter(adapter);
+
+        this.spinnerScore.setSelection(selected-1);
     }
 
     public void readPreferences(){

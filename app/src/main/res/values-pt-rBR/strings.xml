@@ -3,4 +3,27 @@
     <string name="app_name">Movies review</string>
     <string name="about_text">Este aplicativo foi desenvolvido por Henrique Perfoll Neto, aluno do curso de Especialização em Java. Este aplicativo é o projeto final para a classe de desenvolvimento android.</string>
     <string name="ok">Ok</string>
+    <string name="about">Sobre</string>
+    <string name="about_movies_review">Sobre Movies Review</string>
+    <string name="add">Adicionar</string>
+    <string name="alert_message">Você quer prosseguir com essa ação?</string>
+    <string name="alert_title">Alerta!</string>
+    <string name="background">Plano de fundo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="check">Checar</string>
+    <string name="day_mode">Modo Dia</string>
+    <string name="delete">Deletar</string>
+    <string name="edit">Editar</string>
+    <string name="edit_movie_review">Editar Avaliação</string>
+    <string name="english">English</string>
+    <string name="language">Idioma</string>
+    <string name="messageError">O nome não pode ser vazio</string>
+    <string name="movie_name">Nome do Filme</string>
+    <string name="new_movie_review">Nova avaliação</string>
+    <string name="night_mode">Modo Noturno</string>
+    <string name="portuguese">Portuguese</string>
+    <string name="preferences">Preferências</string>
+    <string name="review">Avaliação</string>
+    <string name="save">Salvar</string>
+    <string name="score">Nota</string>
 </resources>

@@ -8,6 +8,7 @@ public class MovieReview {
     private long id;
     private String movieName;
     private String review;
+    private int score;
 
     public static Comparator<MovieReview> comparador = new Comparator<MovieReview>() {
 
@@ -55,5 +56,13 @@ public class MovieReview {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

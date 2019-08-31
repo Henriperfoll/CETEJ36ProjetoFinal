@@ -16,6 +16,7 @@ public class MovieReviewDAO {
     public static final String NAME     = "NAME";
     public static final String ID       = "ID";
     public static final String REVIEW   = "REVIEW";
+    public static final String SCORE   = "SCORE";
 
     private AppDatabase database;
     public List<MovieReview> list;
@@ -29,6 +30,7 @@ public class MovieReviewDAO {
         String sql = "CREATE TABLE " + TABLE + "(" +
                 ID    + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 NAME  + " TEXT NOT NULL, " +
+                SCORE  + " INTEGER NOT NULL, " +
                 REVIEW + " TEXT)";
         database.execSQL(sql);
     }
@@ -42,6 +44,7 @@ public class MovieReviewDAO {
         ContentValues values = new ContentValues();
 
         values.put(NAME, movieReview.getMovieName());
+        values.put(SCORE, movieReview.getScore());
         values.put(REVIEW, movieReview.getReview());
 
         long id = database.getWritableDatabase().insert(TABLE,
@@ -61,6 +64,7 @@ public class MovieReviewDAO {
         ContentValues values = new ContentValues();
 
         values.put(NAME,  movieReview.getMovieName());
+        values.put(SCORE, movieReview.getScore());
         values.put(REVIEW, movieReview.getReview());
 
         String[] args = {String.valueOf(movieReview.getId())};
@@ -97,6 +101,7 @@ public class MovieReviewDAO {
         int columnName  = cursor.getColumnIndex(NAME);
         int columnId    = cursor.getColumnIndex(ID);
         int columnReview = cursor.getColumnIndex(REVIEW);
+        int columnScore = cursor.getColumnIndex(SCORE);
 
         while(cursor.moveToNext()){
 
@@ -105,6 +110,7 @@ public class MovieReviewDAO {
             movieReview.setId(cursor.getLong(columnId));
             movieReview.setMovieName(cursor.getString(columnName));
             movieReview.setReview(cursor.getString(columnReview));
+            movieReview.setScore(cursor.getInt(columnScore));
 
             list.add(movieReview);
         }
